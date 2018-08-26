@@ -1,0 +1,7 @@
+1.初始化项目
+    1.初始化项目描述文件 npm init -y
+        会在项目目录下生成package.json文件
+2.创建项目的主文件app.js
+3.下载express 框架 npm install express --save
+    --save 将当前下载第三方模块记录在项目描述文件中
+4.利用express 创建web服务器
