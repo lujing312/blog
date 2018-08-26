@@ -13,19 +13,19 @@
                     <ul>
                         <li>
                             <label for="">用户名:</label>
-                            <input type="text">
+                            <input type="text" name="username">
                         </li>
                         <li>
                             <label for="">邮　箱:</label>
-                            <input type="text">
+                            <input type="text" name="email">
                         </li>
                         <li>
                             <label for="">密　码:</label>
-                            <input type="password">
+                            <input type="password" name="pass">
                         </li>
                         <li>
                             <label for=""></label>
-                            <input type="submit" value="注 册">
+                            <input type="submit" value="注 册" id="registerBtn">
                         </li>
                     </ul>
                 </form>
@@ -34,3 +34,23 @@
     </div>
     {{> home/footer}}
 </div>
+<script>
+$('#registerBtn').on('submit',function(){
+
+    var formData=$(this).serializeToJson();
+    $.ajax({
+        type:'post',
+        url:'/home/register',
+        data:formData,
+        success:function(ressponse){
+            if(response.success){
+                location.href='/home/login';
+            }else{
+                alert(response.message);
+            }
+        }
+
+    })
+    return false;
+})
+</script>

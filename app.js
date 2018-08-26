@@ -4,28 +4,33 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 // 引入path模块 用来处理路径
 const path = require('path');
+const md5 = require('md5');
+//处理post参数模块
+const bodyParser = require('body-parser');
+
 
 // 创建web服务器
 const app = express();
-
+//告诉bodyParser 模块为我处理application/x-www-form-urlencode类型参数
+app.use(bodyParser.urlencoded({ extended: false }));
 // 开放静态资源目录
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 告诉express项目所使用的模板引擎是哪个
 // 配置模板引擎
 app.engine('handlebars', exphbs({
-	// 配置了公共部分的路径
-	partialsDir: [{
-		dir: path.join(__dirname, 'views', 'home', 'partials'),
-		namespace: 'home'
-	},{
-		dir: path.join(__dirname, 'views', 'admin', 'partials'),
-		namespace: 'admin'
-	}],
-	// 模板架构所在目录
-	layoutsDir: path.join(__dirname, 'views', 'layouts'),
-	// 渲染模板时默认使用的模板架构
-	defaultLayout: 'home'
+    // 配置了公共部分的路径
+    partialsDir: [{
+        dir: path.join(__dirname, 'views', 'home', 'partials'),
+        namespace: 'home'
+    }, {
+        dir: path.join(__dirname, 'views', 'admin', 'partials'),
+        namespace: 'admin'
+    }],
+    // 模板架构所在目录
+    layoutsDir: path.join(__dirname, 'views', 'layouts'),
+    // 渲染模板时默认使用的模板架构
+    defaultLayout: 'home'
 }));
 
 // 指定模板的目录
@@ -35,6 +40,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
 // 导入前端路由模块 返回前端路由一级模块对象
+
 const home = require('./routes/home.js');
 const admin = require('./routes/admin.js');
 
@@ -46,7 +52,7 @@ app.use('/admin', admin);
 
 // 让服务器监听3000端口向外界提供服务
 app.listen(3000, err => {
-	if (err == null) {
-		console.log('服务器启动成功,请访问http://localhost:3000');
-	}
+    if (err == null) {
+        console.log('服务器启动成功,请访问http://localhost:3000');
+    }
 });
